@@ -1,11 +1,12 @@
 package org.application.template;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
 
 @SpringBootTest
-class AppTests {
+public class AppTests {
     @Test
     void contextLoads() {
+        System.out.println("Spring context loaded successfully.");
     }
 }
