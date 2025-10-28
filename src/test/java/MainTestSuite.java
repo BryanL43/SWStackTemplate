@@ -7,7 +7,6 @@ import org.application.template.AppTests;
  * MainTestSuite
  *
  * Test suite that sequentially execute the listed tests.
- * Test objects should be placed under /test/java/ directory.
  */
 @Suite
 @SelectClasses({
