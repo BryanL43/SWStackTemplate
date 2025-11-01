@@ -7,15 +7,23 @@ type User {
     createdAt: String!
 }
 
+input UserInput {
+    first_name: String!
+    last_name: String!
+    email: String!
+    password: String!
+}
+
+type UserMutationResponse {
+    success: Boolean!
+    message: String!
+    user: User
+}
+
 type Query {
-    userById(id: ID!): User     # Get one user by ID
+    userById(id: ID!): User
 }
 
 type Mutation {
-    createUser(
-        first_name: String!
-        last_name: String!
-        email: String!
-        password: String!
-    ): User
+    createUser(user: UserInput!): UserMutationResponse!
 }
