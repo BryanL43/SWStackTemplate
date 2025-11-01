@@ -1,9 +1,15 @@
 ### Maven & Build Artifacts ###
 HELP.md
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+.mvn/
+mvnw
+mvnw.cmd
+!pom.xml
+!src/
+!**/src/main/**/resources/application.properties
+!**/src/main/**/resources/static/
+!**/src/main/**/resources/graphql/
+!**/src/main/**/resources/templates/
 
 ### STS ###
 .apt_generated
@@ -39,3 +45,9 @@ build/
 ### Sensitive Files ###
 .env
 *.log
+
+### Git & Docker Metadata ###
+.git/
+.gitignore
+Dockerfile
+docker-compose.yml
