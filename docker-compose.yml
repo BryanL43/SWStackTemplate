@@ -1,8 +1,9 @@
-version: '3.9'
-
 services:
     app:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: app:latest
         container_name: app
         expose:
             - "8080"
