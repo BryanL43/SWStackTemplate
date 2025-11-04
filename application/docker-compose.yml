@@ -1,0 +1,47 @@
+services:
+    server:
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        image: server:latest
+        container_name: server
+        expose:
+            - "8080"
+        ports:
+            - "8080:8080"
+        environment:
+            SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+            SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+            SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+            ENABLE_GRAPHIQL: ${ENABLE_GRAPHIQL}
+        restart: unless-stopped
+
+    client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+            args:
+                VITE_STRICT_MODE: ${VITE_STRICT_MODE}
+        image: client:latest
+        container_name: client
+        command: >
+            sh -c "if [ \"$MODE\" = 'local' ]; then npm run dev; else npm run build && cp -r dist/* /app/dist/; fi"
+        volumes:
+            - ./client:/app
+            - client_dist:/app/dist
+
+    nginx:
+        image: nginx:alpine
+        container_name: nginx
+        depends_on:
+            - server
+            - client
+        ports:
+            - "80:80"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - client_dist:/usr/share/nginx/html:ro
+        restart: unless-stopped
+
+volumes:
+    client_dist:
