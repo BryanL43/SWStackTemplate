@@ -14,7 +14,7 @@ services:
             SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
             SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
             ENABLE_GRAPHIQL: ${ENABLE_GRAPHIQL}
-        restart: unless-stopped
+        restart: on-failure:3
 
     client:
         build:
@@ -24,10 +24,7 @@ services:
                 VITE_STRICT_MODE: ${VITE_STRICT_MODE}
         image: client:latest
         container_name: client
-        command: >
-            sh -c "if [ \"$MODE\" = 'local' ]; then npm run dev; else npm run build && cp -r dist/* /app/dist/; fi"
         volumes:
-            - ./client:/app
             - client_dist:/app/dist
 
     nginx:
