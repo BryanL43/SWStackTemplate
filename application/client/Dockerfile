@@ -22,7 +22,7 @@ RUN npm run build
 # ======================================
 FROM alpine:latest AS export
 
-WORKDIR /dist
+WORKDIR /app
 
 # Copy build output from previous stage
-COPY --from=build /app/dist ./
+COPY --from=builder /app/dist ./dist
