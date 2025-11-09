@@ -41,7 +41,15 @@ services:
             - client_dist:/usr/share/nginx/html:ro
             - /etc/letsencrypt/live/${CERT_DOMAIN}:/etc/letsencrypt/live/${CERT_DOMAIN}:ro
             - /etc/letsencrypt/archive/${CERT_DOMAIN}:/etc/letsencrypt/archive/${CERT_DOMAIN}:ro
+            - /var/www/certbot:/var/www/certbot
         restart: unless-stopped
+
+    certbot:
+        image: certbot/certbot
+        container_name: certbot
+        volumes:
+            - /etc/letsencrypt:/etc/letsencrypt
+            - /var/www/certbot:/var/www/certbot
 
 volumes:
     client_dist:
