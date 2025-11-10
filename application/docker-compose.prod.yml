@@ -5,6 +5,8 @@ services:
             dockerfile: Dockerfile
         image: server:latest
         container_name: server
+        depends_on:
+            - redis
         expose:
             - "8080"
         ports:
@@ -27,6 +29,18 @@ services:
         volumes:
             - client_dist:/app/dist
 
+    redis:
+        image: redis:alpine
+        container_name: redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+        environment:
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+        restart: unless-stopped
+
     nginx:
         image: nginx:alpine
         container_name: nginx
@@ -46,3 +60,4 @@ services:
 
 volumes:
     client_dist:
+    redis_data:
