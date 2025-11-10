@@ -35,9 +35,13 @@ services:
             - client
         ports:
             - "80:80"
+            - "443:443"
         volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./nginx/prod.conf:/etc/nginx/conf.d/default.conf:ro
             - client_dist:/usr/share/nginx/html:ro
+            - /etc/letsencrypt/live/${CERT_DOMAIN}:/etc/letsencrypt/live/${CERT_DOMAIN}:ro
+            - /etc/letsencrypt/archive/${CERT_DOMAIN}:/etc/letsencrypt/archive/${CERT_DOMAIN}:ro
+            - /var/www/certbot:/var/www/certbot
         restart: unless-stopped
 
 volumes:
